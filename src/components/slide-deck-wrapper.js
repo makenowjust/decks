@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef, useEffect} from 'react';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 
 import 'modern-normalize';
@@ -15,19 +15,12 @@ const {
 
 const {keys} = constants;
 
-class SlideDeckWrapper extends React.Component {
-  constructor() {
-    super();
-    this.slideDeckRef = React.createRef();
-    this.focusRef = React.createRef();
-  }
+const SlideDeckWrapper = ({slides, theme}) => {
+  const slideDeckRef = createRef();
+  const focusRef = createRef();
 
-  componentDidMount() {
-    this.focusRef.current.focus();
-  }
-
-  handleKeyDown = e => {
-    if (document.activeElement !== this.focusRef.current) {
+  const handleKeyDown = e => {
+    if (document.activeElement !== focusRef.current) {
       return;
     }
 
@@ -38,7 +31,7 @@ class SlideDeckWrapper extends React.Component {
       return;
     }
 
-    const slideDeck = this.slideDeckRef.current;
+    const slideDeck = slideDeckRef.current;
 
     const alt = e.altKey && !e.shiftKey;
     const shift = e.shiftKey && !e.altKey;
@@ -89,25 +82,25 @@ class SlideDeckWrapper extends React.Component {
           break;
       }
     }
-
     /* eslint-enable default-case */
   };
 
-  render() {
-    const {slides, theme} = this.props;
+  // Focus to wrapper element to handle key events without clicking window.
+  useEffect(() => {
+    focusRef.current.focus();
+  });
 
-    return (
-      <div tabIndex="-1" ref={this.focusRef} onKeyDown={this.handleKeyDown}>
-        <SlideDeck
-          ref={this.slideDeckRef}
-          slides={slides}
-          theme={theme}
-          width="100vw"
-          height="100vh"
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div tabIndex="-1" ref={focusRef} onKeyDown={handleKeyDown}>
+      <SlideDeck
+        ref={slideDeckRef}
+        slides={slides}
+        theme={theme}
+        width="100vw"
+        height="100vh"
+      />
+    </div>
+  );
+};
 
 export default SlideDeckWrapper;
