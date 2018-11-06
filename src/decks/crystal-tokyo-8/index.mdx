@@ -1,0 +1,223 @@
+
+import {CodeSurfer} from 'mdx-deck-code-surfer';
+import {Helmet} from 'react-helmet';
+
+import {dark as baseTheme} from 'mdx-deck/themes';
+import codeSurfer from 'prism-react-renderer/themes/nightOwl';
+
+export const theme = {
+  ...baseTheme,
+    codeSurfer: {
+    ...codeSurfer,
+    showNumbers: true
+  },
+};
+
+import contributorsImage from './images/contributors.png';
+import searchLocPragmaImage from './images/search-loc-pragma.png';
+import pr7008Image from './images/pr-7008.png';
+
+<Helmet>
+  <title>About loc pragma</title>
+</Helmet>
+
+# About `loc` pragma
+
+## TSUYUSATO Kitsune (@MakeNowJust)
+
+---
+
+## About Me
+
+  - TSUYUSATO Kitsune
+  - GitHub: @MakeNowJust
+  - Twitter: @make_now_just
+  - Frontend Engineer at Space Pirates Inc.
+
+---
+
+## No.4 Crystal Contributor
+
+<img src={contributorsImage} />
+
+---
+
+## `loc` pragma?
+
+  - One of the hidden (undocumented) features of Crystal
+  - It can update location on parsing explicitly.
+
+<img src={searchLocPragmaImage} />
+
+---
+
+## Example: ECR
+
+---
+
+## How ECR works
+
+  1. Macro `ECR.def_to_s` calls `run` macro with `ecr/process` and given ECR file.
+  2. Program `ecr/process` prints Crystal source code generated from given ECR file.
+  3. Then, this generated source code is embeded as a `ECR.def_to_s` result.
+
+---
+
+<CodeSurfer
+  title="ecr-sample.cr"
+  code={require("!raw-loader!./examples/ecr-sample.cr")}
+  lang="ruby"
+/>
+
+---
+
+<CodeSurfer
+  title="ecr-sample.ecr"
+  code={require("!raw-loader!./examples/ecr-sample.ecr")}
+  lang="html"
+  steps={[
+    {},
+    {lines: [6], notes: '"tilte" is misspelled...'},
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  title="Execute ecr-sample.cr"
+  code={require("!raw-loader!./examples/ecr-sample.log")}
+  lang="text"
+  steps={[
+    {},
+    {lines: [31, 32, 33, 34], notes: 'show correct location instead of generated code location'},
+  ]}
+/>
+
+---
+
+## How does ECR tell original source code location to compiler?
+
+---
+
+## Run `ecr/process` at hand.
+
+```
+$ echo 'require "ecr/process"' |
+    crystal run --stdin-filename process.cr -- ecr-sample.ecr ___io___
+```
+
+(MEMO: the second command-line argument of `ecr/process` means a variable name to write output.)
+
+---
+
+<CodeSurfer
+  title="Result of ecr-sample.ecr"
+  code={require("!raw-loader!./examples/ecr-sample.ecr.cr")}
+  lang="ruby"
+  steps={[
+    {},
+    {lines: [1, 3, 5], notes: 'These lines are corresponding to literal texts simply.'},
+    {lines: [2, 4], notes: 'These line are corresponding to <%= ... %>, however, what is #<loc:...>?'},
+  ]}
+/>
+
+---
+
+## `loc` pragma syntax
+
+  - `#<loc:"filename",line_number,column_number>`
+  - Override parsing location as given values.
+  - It looks like line comment, but it is not a comment.
+  - So, source code after `loc` pragma is also parsed.
+
+---
+
+## `loc` pragma syntax (`push` and `pop`)
+
+  - `#<loc:push>` and `#<loc:pop>`
+  - `#<loc:push>` saves current location.
+  - `#<loc:pop>` restores the location saved by previous `#<loc:push>`.
+
+It is useful to distinguish between macro generated code and original code.
+
+---
+
+## Example: fix macro argument location
+
+---
+
+<CodeSurfer
+  title="new.cr"
+  code={require("!raw-loader!./examples/new-1.cr")}
+  lang="ruby"
+  steps={[
+    {},
+    {lines: [5], notes: 'BadType is not defined of course.'},
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  title="Execute new.cr"
+  code={require("!raw-loader!./examples/new-1.log")}
+  lang="text"
+  steps={[
+    {},
+    {lines: [11, 12, 13], notes: 'Show macro generated code. But is it useful?'},
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  title="new.cr with loc pragma"
+  code={require("!raw-loader!./examples/new-2.cr")}
+  lang="ruby"
+  steps={[
+    {},
+    {lines: [2], notes: 'Build loc pragma by hand.'},
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  title="Execute new.cr with loc pragma"
+  code={require("!raw-loader!./examples/new-2.log")}
+  lang="text"
+  steps={[
+    {notes: 'Then, it shows really clear error message.'},
+  ]}
+/>
+
+---
+
+## If all expanded macro argument outputs its `loc` pragma...
+
+  * I think it is more natural and useful.
+  * However `loc` pragma is just text, so it causes some issues. e.g.
+  * When macro expansion appears in **doc comment**...
+  * When macro expansion appears in **string literal**...
+
+So, currently the compiler does not outputs `loc` pragma for macro argument.
+
+---
+
+## But now,
+
+I created a new Pull Request with new approach.
+
+---
+
+## [crystal-lang/crystal#7008](https://github.com/crystal-lang/crystal/pull/7008)
+
+<img src={pr7008Image} />
+
+It does not outputs `loc` pragma directly, but it keeps `loc` pragmas as internal data.
+
+Unfortunately it is not merged...
+
+---
+
+# Stay tuned :heart:

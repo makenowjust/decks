@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "name": "decks",
+  "license": "MIT",
+  "scripts": {
+    "build": "maid build",
+    "dev": "maid dev",
+    "format": "maid lint --fix",
+    "lint": "maid lint"
+  },
+  "dependencies": {
+    "modern-normalize": "^0.5.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-helmet": "^5.2.0",
+    "styled-components": "^4.0.3"
+  },
+  "devDependencies": {
+    "fs-extra": "^7.0.0",
+    "gatsby": "^2.0.37",
+    "gatsby-plugin-react-helmet": "^3.0.1",
+    "gatsby-source-filesystem": "^2.0.7",
+    "maid": "^0.3.0",
+    "mdx-deck": "^1.7.7",
+    "mdx-deck-code-surfer": "^0.5.3",
+    "prettier": "^1.14.3",
+    "prettier-package-json": "^2.0.1",
+    "raw-loader": "^0.5.1",
+    "remark-emoji": "^2.0.2",
+    "remark-unwrap-images": "^0.0.2-0"
+  }
+}
