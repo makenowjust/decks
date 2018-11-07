@@ -1,3 +1,5 @@
+/* eslint-disable default-case */
+
 import React, {createRef, useEffect} from 'react';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 
@@ -25,7 +27,6 @@ const SlideDeckWrapper = ({slides, theme}) => {
     }
 
     // From https://github.com/jxnblk/mdx-deck/blob/118f7fd439fba16c5bf08724741368d2802d9b77/src/SlideDeck.js#L77-L127
-    /* eslint-disable default-case */
 
     if (e.metaKey || e.ctrlKey) {
       return;
@@ -82,7 +83,6 @@ const SlideDeckWrapper = ({slides, theme}) => {
           break;
       }
     }
-    /* eslint-enable default-case */
   };
 
   // Focus to wrapper element to handle key events without clicking window.
