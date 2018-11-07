@@ -92,13 +92,7 @@ const SlideDeckWrapper = ({slides, theme}) => {
 
   return (
     <div tabIndex="-1" ref={focusRef} onKeyDown={handleKeyDown}>
-      <SlideDeck
-        ref={slideDeckRef}
-        slides={slides}
-        theme={theme}
-        width="100vw"
-        height="100vh"
-      />
+      <SlideDeck ref={slideDeckRef} slides={slides} theme={theme} width="100vw" height="100vh" />
     </div>
   );
 };

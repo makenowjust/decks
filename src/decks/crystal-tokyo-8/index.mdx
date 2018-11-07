@@ -1,4 +1,3 @@
-
 import {CodeSurfer} from 'mdx-deck-code-surfer';
 import {Helmet} from 'react-helmet';
 
@@ -7,9 +6,9 @@ import codeSurfer from 'prism-react-renderer/themes/nightOwl';
 
 export const theme = {
   ...baseTheme,
-    codeSurfer: {
+  codeSurfer: {
     ...codeSurfer,
-    showNumbers: true
+    showNumbers: true,
   },
 };
 
@@ -29,10 +28,10 @@ import pr7008Image from './images/pr-7008.png';
 
 ## About Me
 
-  - TSUYUSATO Kitsune
-  - GitHub: @MakeNowJust
-  - Twitter: @make_now_just
-  - Frontend Engineer at Space Pirates Inc.
+- TSUYUSATO Kitsune
+- GitHub: @MakeNowJust
+- Twitter: @make_now_just
+- Frontend Engineer at Space Pirates Inc.
 
 ---
 
@@ -44,8 +43,8 @@ import pr7008Image from './images/pr-7008.png';
 
 ## `loc` pragma?
 
-  - One of the hidden (undocumented) features of Crystal
-  - It can update location on parsing explicitly.
+- One of the hidden (undocumented) features of Crystal
+- It can update location on parsing explicitly.
 
 <img src={searchLocPragmaImage} />
 
@@ -57,15 +56,15 @@ import pr7008Image from './images/pr-7008.png';
 
 ## How ECR works
 
-  1. Macro `ECR.def_to_s` calls `run` macro with `ecr/process` and given ECR file.
-  2. Program `ecr/process` prints Crystal source code generated from given ECR file.
-  3. Then, this generated source code is embeded as a `ECR.def_to_s` result.
+1. Macro `ECR.def_to_s` calls `run` macro with `ecr/process` and given ECR file.
+2. Program `ecr/process` prints Crystal source code generated from given ECR file.
+3. Then, this generated source code is embeded as a `ECR.def_to_s` result.
 
 ---
 
 <CodeSurfer
   title="ecr-sample.cr"
-  code={require("!raw-loader!./examples/ecr-sample.cr")}
+  code={require('!raw-loader!./examples/ecr-sample.cr').trim()}
   lang="ruby"
 />
 
@@ -73,19 +72,16 @@ import pr7008Image from './images/pr-7008.png';
 
 <CodeSurfer
   title="ecr-sample.ecr"
-  code={require("!raw-loader!./examples/ecr-sample.ecr")}
+  code={require('!raw-loader!./examples/ecr-sample.ecr').trim()}
   lang="html"
-  steps={[
-    {},
-    {lines: [6], notes: '"tilte" is misspelled...'},
-  ]}
+  steps={[{}, {lines: [6], notes: '"tilte" is misspelled...'}]}
 />
 
 ---
 
 <CodeSurfer
   title="Execute ecr-sample.cr"
-  code={require("!raw-loader!./examples/ecr-sample.log")}
+  code={require('!raw-loader!./examples/ecr-sample.log').trim()}
   lang="text"
   steps={[
     {},
@@ -112,12 +108,15 @@ $ echo 'require "ecr/process"' |
 
 <CodeSurfer
   title="Result of ecr-sample.ecr"
-  code={require("!raw-loader!./examples/ecr-sample.ecr.cr")}
+  code={require('!raw-loader!./examples/ecr-sample.ecr.cr').trim()}
   lang="ruby"
   steps={[
     {},
     {lines: [1, 3, 5], notes: 'These lines are corresponding to literal texts simply.'},
-    {lines: [2, 4], notes: 'These line are corresponding to <%= ... %>, however, what is #<loc:...>?'},
+    {
+      lines: [2, 4],
+      notes: 'These line are corresponding to <%= ... %>, however, what is #<loc:...>?',
+    },
   ]}
 />
 
@@ -125,18 +124,18 @@ $ echo 'require "ecr/process"' |
 
 ## `loc` pragma syntax
 
-  - `#<loc:"filename",line_number,column_number>`
-  - Override parsing location as given values.
-  - It looks like line comment, but it is not a comment.
-  - So, source code after `loc` pragma is also parsed.
+- `#<loc:"filename",line_number,column_number>`
+- Override parsing location as given values.
+- It looks like line comment, but it is not a comment.
+- So, source code after `loc` pragma is also parsed.
 
 ---
 
 ## `loc` pragma syntax (`push` and `pop`)
 
-  - `#<loc:push>` and `#<loc:pop>`
-  - `#<loc:push>` saves current location.
-  - `#<loc:pop>` restores the location saved by previous `#<loc:push>`.
+- `#<loc:push>` and `#<loc:pop>`
+- `#<loc:push>` saves current location.
+- `#<loc:pop>` restores the location saved by previous `#<loc:push>`.
 
 It is useful to distinguish between macro generated code and original code.
 
@@ -148,57 +147,46 @@ It is useful to distinguish between macro generated code and original code.
 
 <CodeSurfer
   title="new.cr"
-  code={require("!raw-loader!./examples/new-1.cr")}
+  code={require('!raw-loader!./examples/new-1.cr').trim()}
   lang="ruby"
-  steps={[
-    {},
-    {lines: [5], notes: 'BadType is not defined of course.'},
-  ]}
+  steps={[{}, {lines: [5], notes: 'BadType is not defined of course.'}]}
 />
 
 ---
 
 <CodeSurfer
   title="Execute new.cr"
-  code={require("!raw-loader!./examples/new-1.log")}
+  code={require('!raw-loader!./examples/new-1.log').trim()}
   lang="text"
-  steps={[
-    {},
-    {lines: [11, 12, 13], notes: 'Show macro generated code. But is it useful?'},
-  ]}
+  steps={[{}, {lines: [11, 12, 13], notes: 'Show macro generated code. But is it useful?'}]}
 />
 
 ---
 
 <CodeSurfer
   title="new.cr with loc pragma"
-  code={require("!raw-loader!./examples/new-2.cr")}
+  code={require('!raw-loader!./examples/new-2.cr').trim()}
   lang="ruby"
-  steps={[
-    {},
-    {lines: [2], notes: 'Build loc pragma by hand.'},
-  ]}
+  steps={[{}, {lines: [2], notes: 'Build loc pragma by hand.'}]}
 />
 
 ---
 
 <CodeSurfer
   title="Execute new.cr with loc pragma"
-  code={require("!raw-loader!./examples/new-2.log")}
+  code={require('!raw-loader!./examples/new-2.log').trim()}
   lang="text"
-  steps={[
-    {notes: 'Then, it shows really clear error message.'},
-  ]}
+  steps={[{notes: 'Then, it shows really clear error message.'}]}
 />
 
 ---
 
 ## If all expanded macro argument outputs its `loc` pragma...
 
-  * I think it is more natural and useful.
-  * However `loc` pragma is just text, so it causes some issues. e.g.
-  * When macro expansion appears in **doc comment**...
-  * When macro expansion appears in **string literal**...
+- I think it is more natural and useful.
+- However `loc` pragma is just text, so it causes some issues. e.g.
+- When macro expansion appears in **doc comment**...
+- When macro expansion appears in **string literal**...
 
 So, currently the compiler does not outputs `loc` pragma for macro argument.
 

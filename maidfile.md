@@ -32,5 +32,5 @@ else
 fi
 set -ex
 prettier-package-json 'package.json' 'plugins/*/package.json' $prettier_opt
-prettier --ignore-path .gitignore '**/*.{js,json,md,yml}' $prettier_opt
+prettier --ignore-path .gitignore '**/*.{js,json,md,mdx,yml}' $prettier_opt
 ```
