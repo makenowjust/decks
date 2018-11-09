@@ -1,8 +1,7 @@
 import {graphql} from 'gatsby';
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import { setConfig } from 'react-hot-loader';
-
+import {setConfig} from 'react-hot-loader';
 import moment from 'moment';
 
 setConfig({pureSFC: true});
@@ -10,30 +9,28 @@ setConfig({pureSFC: true});
 const Index = ({data}) => {
   const {
     site: {
-      siteMetadata: {
-        title
-      }
-    }
+      siteMetadata: {title},
+    },
   } = data;
 
   const decks = data.allFile.edges.map(({node}) => {
     const {
+      id,
       fields: {
         screenshotUrl,
         slug,
-        frontmatter: {
-          title,
-          date,
-          event,
-        },
+        frontmatter: {title, date, event},
       },
     } = node;
 
     return (
-      <li>
-        <a href={slug}><img src={screenshotUrl} /></a>
+      <li key={id}>
+        <a href={slug}>
+          <img src={screenshotUrl} />
+        </a>
         <a href={slug}>{title}</a>
         <time>{moment(date).format('YYYY-MM-DD')}</time>
+        <a href={event.url}>{event.name}</a>
       </li>
     );
   });
@@ -44,9 +41,7 @@ const Index = ({data}) => {
         <title>{title}</title>
       </Helmet>
       <h1>{title}</h1>
-      <ul>
-        {decks}
-      </ul>
+      <ul>{decks}</ul>
     </>
   );
 };
@@ -62,11 +57,12 @@ export const query = graphql`
     }
 
     allFile(
-      filter: {extension: {eq: "mdx"}},
+      filter: {extension: {eq: "mdx"}}
       sort: {fields: [fields___frontmatter___date], order: ASC}
     ) {
       edges {
         node {
+          id
           fields {
             slug
             screenshotUrl

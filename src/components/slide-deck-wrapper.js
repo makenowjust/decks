@@ -1,8 +1,9 @@
-/* eslint-disable default-case */
+/* eslint-disable complexity, default-case */
 
 import React, {createRef, PureComponent} from 'react';
-import {Helmet} from 'react-helmet';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
+import PropTypes from 'prop-types';
+import {Helmet} from 'react-helmet';
 
 import 'modern-normalize';
 
@@ -19,6 +20,12 @@ const {
 const {keys} = constants;
 
 class SlideDeckWrapper extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    slides: PropTypes.array.isRequired,
+  };
+
   constructor() {
     super();
 
@@ -96,21 +103,15 @@ class SlideDeckWrapper extends PureComponent {
   }
 
   render() {
-    console.log('SlideDeckWrapper#render');
-
     const {data, theme, slides} = this.props;
 
     const {
       site: {
-        siteMetadata: {
-          title: siteTitle,
-        },
+        siteMetadata: {title: siteTitle},
       },
       file: {
         fields: {
-          frontmatter: {
-            title: deckTitle
-          },
+          frontmatter: {title: deckTitle},
         },
       },
     } = data;
@@ -121,12 +122,12 @@ class SlideDeckWrapper extends PureComponent {
         <Helmet>
           <title>{title}</title>
         </Helmet>
-        <div tabIndex="-1" ref={this.focusRef} onKeyDown={this.handleKeyDown}>
+        <div ref={this.focusRef} tabIndex="-1" onKeyDown={this.handleKeyDown}>
           <SlideDeck ref={this.slideDeckRef} slides={slides} theme={theme} />
         </div>
       </>
     );
   }
-};
+}
 
 export default SlideDeckWrapper;

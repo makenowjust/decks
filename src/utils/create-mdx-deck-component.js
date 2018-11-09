@@ -12,7 +12,7 @@ const createHash = str =>
     .update(str)
     .digest(`hex`);
 
-module.exports = async (absoluteDeckPath) => {
+module.exports = async absoluteDeckPath => {
   const source = `// mdx-deck-component for ${absoluteDeckPath}
 
 import {graphql} from 'gatsby';
