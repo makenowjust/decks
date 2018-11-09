@@ -4,13 +4,8 @@ import React, {useEffect} from 'react';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
-import {setConfig} from 'react-hot-loader';
 
 import 'modern-normalize';
-
-// Prevent an error caused by react-hot-loader and React Hooks API.
-// https://github.com/gaearon/react-hot-loader/issues/1088
-setConfig({pureSFC: true});
 
 const {
   previous,
