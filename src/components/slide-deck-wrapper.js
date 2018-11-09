@@ -1,11 +1,16 @@
 /* eslint-disable complexity, default-case */
 
-import React, {createRef, PureComponent} from 'react';
+import React, {useEffect} from 'react';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
+import {setConfig} from 'react-hot-loader';
 
 import 'modern-normalize';
+
+// Prevent an error caused by react-hot-loader and React Hooks API.
+// https://github.com/gaearon/react-hot-loader/issues/1088
+setConfig({pureSFC: true});
 
 const {
   previous,
@@ -19,22 +24,12 @@ const {
 
 const {keys} = constants;
 
-class SlideDeckWrapper extends PureComponent {
-  static propTypes = {
-    data: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    slides: PropTypes.array.isRequired,
-  };
+const SlideDeckWrapper = React.memo(({data, slides, theme}) => {
+  const slideDeckRef = React.createRef();
+  const focusRef = React.createRef();
 
-  constructor() {
-    super();
-
-    this.slideDeckRef = createRef();
-    this.focusRef = createRef();
-  }
-
-  handleKeyDown = e => {
-    if (document.activeElement !== this.focusRef.current) {
+  const handleKeyDown = e => {
+    if (document.activeElement !== focusRef.current) {
       return;
     }
 
@@ -44,7 +39,7 @@ class SlideDeckWrapper extends PureComponent {
       return;
     }
 
-    const slideDeck = this.slideDeckRef.current;
+    const slideDeck = slideDeckRef.current;
 
     const alt = e.altKey && !e.shiftKey;
     const shift = e.shiftKey && !e.altKey;
@@ -97,37 +92,39 @@ class SlideDeckWrapper extends PureComponent {
     }
   };
 
-  componentDidMount() {
+  useEffect(() => {
     // Focus to wrapper element to handle key events without clicking window.
-    this.focusRef.current.focus();
-  }
+    focusRef.current.focus();
+  });
 
-  render() {
-    const {data, theme, slides} = this.props;
-
-    const {
-      site: {
-        siteMetadata: {title: siteTitle},
+  const {
+    site: {
+      siteMetadata: {title: siteTitle},
+    },
+    file: {
+      fields: {
+        frontmatter: {title: deckTitle},
       },
-      file: {
-        fields: {
-          frontmatter: {title: deckTitle},
-        },
-      },
-    } = data;
-    const title = `${deckTitle} - ${siteTitle}`;
+    },
+  } = data;
+  const title = `${deckTitle} - ${siteTitle}`;
 
-    return (
-      <>
-        <Helmet>
-          <title>{title}</title>
-        </Helmet>
-        <div ref={this.focusRef} tabIndex="-1" onKeyDown={this.handleKeyDown}>
-          <SlideDeck ref={this.slideDeckRef} slides={slides} theme={theme} />
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
+      <div ref={focusRef} tabIndex="-1" onKeyDown={handleKeyDown}>
+        <SlideDeck ref={slideDeckRef} slides={slides} theme={theme} />
+      </div>
+    </>
+  );
+});
+
+SlideDeckWrapper.propTypes = {
+  data: PropTypes.object.isRequired,
+  slides: PropTypes.array.isRequired,
+  theme: PropTypes.object.isRequired,
+};
 
 export default SlideDeckWrapper;
