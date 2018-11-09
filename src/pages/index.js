@@ -1,4 +1,4 @@
-import {graphql} from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import {setConfig} from 'react-hot-loader';
@@ -25,10 +25,10 @@ const Index = ({data}) => {
 
     return (
       <li key={id}>
-        <a href={slug}>
+        <Link to={slug}>
           <img src={screenshotUrl} />
-        </a>
-        <a href={slug}>{title}</a>
+        </Link>
+        <Link to={slug}>{title}</Link>
         <time>{moment(date).format('YYYY-MM-DD')}</time>
         <a href={event.url}>{event.name}</a>
       </li>

@@ -1,8 +1,8 @@
 /* eslint-disable complexity, default-case */
 
-import React, {useEffect} from 'react';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
 import {Helmet} from 'react-helmet';
 
 import 'modern-normalize';

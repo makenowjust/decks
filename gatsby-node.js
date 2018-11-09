@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const grayMatter = require('gray-matter');
 const {createFilePath} = require('gatsby-source-filesystem');
 
-const createMdxDeckComponent = require('./src/utils/create-mdx-deck-component');
+const createMdxDeckTemplate = require('./src/utils/create-mdx-deck-template');
 
 exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
   const {createNodeField} = actions;
@@ -21,7 +21,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
     });
 
     // Capture screenshot by `mdx-deck`.
-    const screenshotUrl = `/static/mdx-deck/${node.internal.contentDigest}.png`;
+    const screenshotUrl = `/static/mdx-deck/${node.internal.contentDigest}/screenshot.png`;
     const outDir = path.join(__dirname, `public${path.dirname(screenshotUrl)}`);
     const outFile = path.basename(screenshotUrl);
     if (!(await fs.pathExists(path.join(outDir, outFile)))) {
@@ -77,7 +77,7 @@ exports.createPages = async ({graphql, actions}) => {
     result.data.allFile.edges.map(async ({node}) => {
       createPage({
         path: node.fields.slug,
-        component: await createMdxDeckComponent(node.absolutePath),
+        component: await createMdxDeckTemplate(node.absolutePath),
         context: {id: node.id},
       });
     }),

@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs-extra');
 
 const cacheDir = path.join(__dirname, '../../.cache');
-const componentDir = path.join(cacheDir, 'mdx-deck-component');
+const templateDir = path.join(cacheDir, 'mdx-deck-template');
 
 const createHash = str =>
   crypto
@@ -13,23 +13,23 @@ const createHash = str =>
     .digest(`hex`);
 
 module.exports = async absoluteDeckPath => {
-  const source = `// mdx-deck-component for ${absoluteDeckPath}
+  const source = `// mdx-deck-template for ${absoluteDeckPath}
 
 import {graphql} from 'gatsby';
 import React from 'react';
 
 import SlideDeckWrapper from '${require.resolve('../components/slide-deck-wrapper')}';
-
 import slides, {theme} from '${absoluteDeckPath}';
 
-const MdxDeckComponent = ({data}) =>
+const MdxDeckTemplate = ({data}) =>
   <SlideDeckWrapper
     data={data}
     slides={slides}
     theme={theme}
   />;
 
-export default MdxDeckComponent;
+export default MdxDeckTemplate;
+
 
 export const query = graphql\`
   query($id: String!) {
@@ -53,8 +53,8 @@ export const query = graphql\`
 \`;
 `;
 
-  const componentPath = path.join(componentDir, `${createHash(absoluteDeckPath)}.js`);
-  await fs.outputFile(componentPath, source);
+  const templatePath = path.join(templateDir, `${createHash(absoluteDeckPath)}.js`);
+  await fs.outputFile(templatePath, source);
 
-  return componentPath;
+  return templatePath;
 };
