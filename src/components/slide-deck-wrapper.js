@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
 
-import React, {createRef, useEffect} from 'react';
+import React, {createRef, PureComponent} from 'react';
+import {Helmet} from 'react-helmet';
 import {SlideDeck, updaters, constants} from 'mdx-deck';
 
 import 'modern-normalize';
@@ -17,12 +18,16 @@ const {
 
 const {keys} = constants;
 
-const SlideDeckWrapper = ({slides, theme}) => {
-  const slideDeckRef = createRef();
-  const focusRef = createRef();
+class SlideDeckWrapper extends PureComponent {
+  constructor() {
+    super();
 
-  const handleKeyDown = e => {
-    if (document.activeElement !== focusRef.current) {
+    this.slideDeckRef = createRef();
+    this.focusRef = createRef();
+  }
+
+  handleKeyDown = e => {
+    if (document.activeElement !== this.focusRef.current) {
       return;
     }
 
@@ -32,7 +37,7 @@ const SlideDeckWrapper = ({slides, theme}) => {
       return;
     }
 
-    const slideDeck = slideDeckRef.current;
+    const slideDeck = this.slideDeckRef.current;
 
     const alt = e.altKey && !e.shiftKey;
     const shift = e.shiftKey && !e.altKey;
@@ -85,16 +90,43 @@ const SlideDeckWrapper = ({slides, theme}) => {
     }
   };
 
-  // Focus to wrapper element to handle key events without clicking window.
-  useEffect(() => {
-    focusRef.current.focus();
-  });
+  componentDidMount() {
+    // Focus to wrapper element to handle key events without clicking window.
+    this.focusRef.current.focus();
+  }
 
-  return (
-    <div tabIndex="-1" ref={focusRef} onKeyDown={handleKeyDown}>
-      <SlideDeck ref={slideDeckRef} slides={slides} theme={theme} width="100vw" height="100vh" />
-    </div>
-  );
+  render() {
+    console.log('SlideDeckWrapper#render');
+
+    const {data, theme, slides} = this.props;
+
+    const {
+      site: {
+        siteMetadata: {
+          title: siteTitle,
+        },
+      },
+      file: {
+        fields: {
+          frontmatter: {
+            title: deckTitle
+          },
+        },
+      },
+    } = data;
+    const title = `${deckTitle} - ${siteTitle}`;
+
+    return (
+      <>
+        <Helmet>
+          <title>{title}</title>
+        </Helmet>
+        <div tabIndex="-1" ref={this.focusRef} onKeyDown={this.handleKeyDown}>
+          <SlideDeck ref={this.slideDeckRef} slides={slides} theme={theme} />
+        </div>
+      </>
+    );
+  }
 };
 
 export default SlideDeckWrapper;

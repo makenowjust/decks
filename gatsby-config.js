@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'MakeNowJust decks',
+    title: 'decks',
     siteUrl: 'https://makenowjust.github.io/decks',
   },
   plugins: [
