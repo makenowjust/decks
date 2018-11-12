@@ -26,7 +26,7 @@ const Index = ({data}) => {
     return (
       <li key={id}>
         <Link to={slug}>
-          <img src={screenshotUrl} />
+          <img alt={`${slug} screenshot`} src={screenshotUrl} />
         </Link>
         <Link to={slug}>{title}</Link>
         <time>{moment(date).format('YYYY-MM-DD')}</time>

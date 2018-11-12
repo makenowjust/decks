@@ -109,7 +109,7 @@ const SlideDeckWrapper = React.memo(({data, slides, theme}) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <div ref={focusRef} tabIndex="-1" onKeyDown={handleKeyDown}>
+      <div ref={focusRef} role="presentation" tabIndex="-1" onKeyDown={handleKeyDown}>
         <SlideDeck ref={slideDeckRef} slides={slides} theme={theme} />
       </div>
     </>
