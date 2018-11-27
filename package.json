@@ -42,6 +42,6 @@
     "prettier-package-json": "^2.0.1",
     "raw-loader": "^0.5.1",
     "remark-emoji": "^2.0.2",
-    "remark-unwrap-images": "^0.0.2-0"
+    "remark-unwrap-images": "^0.1.0"
   }
 }
