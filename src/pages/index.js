@@ -7,31 +7,40 @@ import styled from 'styled-components';
 import 'modern-normalize';
 
 const PAGE_WIDTH = 860;
+const PAGE_MARGIN = 16;
 
 const Header = styled.header`
   padding: 10em 0;
   text-align: center;
 `;
 
-const List = styled.ul`
+const SlideList = styled.ul`
   max-width: ${PAGE_WIDTH}px;
   width: 100%;
-  margin: 0 auto;
+  margin: ${PAGE_MARGIN}px auto 0 auto;
+  padding: 0 ${PAGE_MARGIN}px;
+  border-bottom: 1px solid;
+`;
+
+const SlideListItem = styled.li`
+  display: block;
   padding: 0;
 `;
 
-const ListItem = styled.li`
-  display: block;
-  padding: 0;
+const SlideImage = styled.img`
+  max-width: ${PAGE_WIDTH - PAGE_MARGIN * 2}px;
+  width: 100%;
+`;
 
-  img {
-    max-width: ${PAGE_WIDTH}px;
-    width: 100%;
-  }
+const SlideDescription = styled.p`
+  text-align: right;
+  padding: ${PAGE_MARGIN}px 0;
+  margin: 0;
+`;
 
-  p {
-    text-align: right;
-  }
+const Footer = styled.footer`
+  text-align: center;
+  padding: ${PAGE_MARGIN}px 0;
 `;
 
 const Index = ({data}) => {
@@ -52,16 +61,19 @@ const Index = ({data}) => {
     } = node;
 
     return (
-      <ListItem key={id}>
+      <SlideListItem key={id}>
         <Link to={slug}>
-          <img alt={`${slug} screenshot`} src={screenshotUrl} />
+          <SlideImage alt={`${slug} screenshot`} src={screenshotUrl} />
         </Link>
-        <p>
+        <SlideDescription>
           <Link to={slug}>{title}</Link>
-          {' at '} <time>{moment(date).format('YYYY-MM-DD')}</time>
-          {' ('}<a href={event.url}>{event.name}</a>)
-        </p>
-      </ListItem>
+          {' at '}
+          <time>{moment(date).format('YYYY-MM-DD')}</time>
+          {' ('}
+          <a href={event.url}>{event.name}</a>
+          {')'}
+        </SlideDescription>
+      </SlideListItem>
     );
   });
 
@@ -74,7 +86,10 @@ const Index = ({data}) => {
         <h1>{title}</h1>
         <p>{description}</p>
       </Header>
-      <List>{decks}</List>
+      <SlideList>{decks}</SlideList>
+      <Footer>
+        2018 © TSUYUSATO <a href="https://github.com/MakeNowJust">"MakeNowJust"</a> Kitsune
+      </Footer>
     </>
   );
 };
