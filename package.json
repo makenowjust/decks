@@ -21,7 +21,9 @@
     "styled-components": "^4.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-styled-components": "^1.9.2",
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-xo-react": "^0.17.0",
@@ -35,6 +37,7 @@
     "fs-extra": "^7.0.0",
     "gatsby": "^2.0.59",
     "gatsby-plugin-react-helmet": "^3.0.3",
+    "gatsby-plugin-styled-components": "^3.0.4",
     "gatsby-source-filesystem": "^2.0.10",
     "gray-matter": "^4.0.1",
     "maid": "^0.3.0",

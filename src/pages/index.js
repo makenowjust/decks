@@ -1,15 +1,43 @@
 import {graphql, Link} from 'gatsby';
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import {setConfig} from 'react-hot-loader';
 import moment from 'moment';
+import styled from 'styled-components';
 
-setConfig({pureSFC: true});
+import 'modern-normalize';
+
+const PAGE_WIDTH = 860;
+
+const Header = styled.header`
+  padding: 10em 0;
+  text-align: center;
+`;
+
+const List = styled.ul`
+  max-width: ${PAGE_WIDTH}px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+`;
+
+const ListItem = styled.li`
+  display: block;
+  padding: 0;
+
+  img {
+    max-width: ${PAGE_WIDTH}px;
+    width: 100%;
+  }
+
+  p {
+    text-align: right;
+  }
+`;
 
 const Index = ({data}) => {
   const {
     site: {
-      siteMetadata: {title},
+      siteMetadata: {title, description},
     },
   } = data;
 
@@ -24,14 +52,16 @@ const Index = ({data}) => {
     } = node;
 
     return (
-      <li key={id}>
+      <ListItem key={id}>
         <Link to={slug}>
           <img alt={`${slug} screenshot`} src={screenshotUrl} />
         </Link>
-        <Link to={slug}>{title}</Link>
-        <time>{moment(date).format('YYYY-MM-DD')}</time>
-        <a href={event.url}>{event.name}</a>
-      </li>
+        <p>
+          <Link to={slug}>{title}</Link>
+          {' at '} <time>{moment(date).format('YYYY-MM-DD')}</time>
+          {' ('}<a href={event.url}>{event.name}</a>)
+        </p>
+      </ListItem>
     );
   });
 
@@ -40,8 +70,11 @@ const Index = ({data}) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <h1>{title}</h1>
-      <ul>{decks}</ul>
+      <Header>
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </Header>
+      <List>{decks}</List>
     </>
   );
 };
@@ -53,6 +86,7 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+        description
       }
     }
 
