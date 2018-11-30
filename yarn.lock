@@ -7834,10 +7834,10 @@ mdx-deck-code-surfer@^0.5.3:
     code-surfer "^0.5.3"
     memoize-one "^4.0.2"
 
-mdx-deck@^1.7.7:
-  version "1.7.15"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-1.7.15.tgz#193081d833f133d6252d867eacfb8dd1bf5a3d9a"
-  integrity sha512-3z1aB2uZlbiB9LLU6BfYP4Xa8cAvOv1t4nQ3nydimr8bX7O7E13wS5HKAz1i9iXnP3wNpChcPyiW69G02IXT0A==
+mdx-deck@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-1.8.1.tgz#b4c1af78a741ed237cb9987e957ee5cd8d687f6a"
+  integrity sha512-zHN7wEynkEDmgbk7NCF+yn8cJbsT3ZcUpvzx8doH74hsQH03Y0mkHI8UR8Ge+7a6t0KVSu014erfkdwJCRZqrA==
   dependencies:
     "@compositor/webfont" "^1.0.39"
     "@mdx-js/mdx" "^0.15.7"
