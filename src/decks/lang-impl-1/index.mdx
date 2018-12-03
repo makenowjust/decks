@@ -9,7 +9,17 @@ date: 2018-11-17
 import {Split} from 'mdx-deck/layouts';
 import {CodeSurfer} from 'mdx-deck-code-surfer';
 
-export const theme = undefined;
+import {default as baseTheme} from 'mdx-deck/themes';
+import codeSurfer from 'prism-react-renderer/themes/nightOwl';
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+</style>
+
+export const theme = {
+  ...baseTheme,
+  font: '"Noto Sans JP", sans-serif',
+};
 
 import no4Image from './images/no4.png';
 import iconImage from './images/icon.png';
