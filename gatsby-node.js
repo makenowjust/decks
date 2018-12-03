@@ -7,7 +7,7 @@ const {createFilePath} = require('gatsby-source-filesystem');
 
 const createMdxDeckTemplate = require('./src/utils/create-mdx-deck-template');
 
-exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
+exports.onCreateNode = async ({node, getNode, loadNodeContent, actions, pathPrefix}) => {
   const {createNodeField} = actions;
 
   // Process for mdx.
@@ -40,7 +40,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions}) => {
     createNodeField({
       node,
       name: 'screenshotUrl',
-      value: screenshotUrl,
+      value: `${pathPrefix}${screenshotUrl}`,
     });
 
     // Load frontmatter.
