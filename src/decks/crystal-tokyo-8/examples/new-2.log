@@ -1,0 +1,9 @@
+Error in new.cr:5: expanding macro
+
+new BadType
+^~~
+
+in new.cr:5: undefined constant BadType
+
+new BadType
+    ^~~~~~~

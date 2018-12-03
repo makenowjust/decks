@@ -1,0 +1,15 @@
+Error in new.cr:5: expanding macro
+
+new BadType
+^~~
+
+in new.cr:5: expanding macro
+
+new BadType
+^
+
+in macro 'new' new.cr:1, line 1:
+
+>  1.   BadType.new
+
+undefined constant BadType

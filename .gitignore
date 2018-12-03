@@ -1,6 +1,7 @@
 # Node.js
 node_modules/
-*.log
+npm-*.log
+yarn-*.log
 
 # GatsbyJS
 .cache/
