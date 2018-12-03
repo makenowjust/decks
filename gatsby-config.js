@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/decks',
   siteMetadata: {
     title: 'decks',
     description: "MakeNowJust's slides here",
