@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'decks',
-    description: 'MakeNowJust\'s slides here',
+    description: "MakeNowJust's slides here",
     siteUrl: 'https://makenowjust.github.io/decks',
   },
   plugins: [

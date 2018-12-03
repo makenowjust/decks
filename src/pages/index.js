@@ -10,8 +10,8 @@ const PAGE_WIDTH = 860;
 const PAGE_MARGIN = 16;
 
 const Header = styled.header`
-  max-width: ${PAGE_WIDTH}px;
   width: 100%;
+  max-width: ${PAGE_WIDTH}px;
   padding: 10em 0;
   margin: 0 auto;
   text-align: center;
@@ -19,26 +19,26 @@ const Header = styled.header`
 
 const SlideList = styled.ul`
   max-width: ${PAGE_WIDTH}px;
-  margin: 0 auto;
   padding: 0 ${PAGE_MARGIN}px;
+  margin: 0 auto;
 `;
 
 const SlideListItem = styled.li`
   display: block;
   padding: 0;
-  margin: ${PAGE_MARGIN}px 0;
   border-bottom: 1px solid;
+  margin: ${PAGE_MARGIN}px 0;
 `;
 
 const SlideImage = styled.img`
-  max-width: ${PAGE_WIDTH - PAGE_MARGIN * 2}px;
   width: 100%;
+  max-width: ${PAGE_WIDTH - PAGE_MARGIN * 2}px;
 `;
 
 const SlideDescription = styled.p`
-  text-align: right;
   padding: ${PAGE_MARGIN}px 0;
   margin: 0;
+  text-align: right;
 `;
 
 const Footer = styled.footer`
@@ -70,17 +70,15 @@ const Index = ({data}) => {
         </Link>
         <SlideDescription>
           <Link to={slug}>{title}</Link>
-          {
-            event && date && (
-              <>
-                {' at '}
-                <a href={event.url}>{event.name}</a>
-                {' ('}
-                <time>{moment(date).format('YYYY-MM-DD')}</time>
-                {')'}
-              </>
-            )
-          }
+          {event && date && (
+            <>
+              {' at '}
+              <a href={event.url}>{event.name}</a>
+              {' ('}
+              <time>{moment(date).format('YYYY-MM-DD')}</time>
+              {')'}
+            </>
+          )}
         </SlideDescription>
       </SlideListItem>
     );
