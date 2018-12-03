@@ -10,21 +10,24 @@ const PAGE_WIDTH = 860;
 const PAGE_MARGIN = 16;
 
 const Header = styled.header`
+  max-width: ${PAGE_WIDTH}px;
+  width: 100%;
   padding: 10em 0;
+  margin: 0 auto;
   text-align: center;
 `;
 
 const SlideList = styled.ul`
   max-width: ${PAGE_WIDTH}px;
-  width: 100%;
-  margin: ${PAGE_MARGIN}px auto 0 auto;
+  margin: 0 auto;
   padding: 0 ${PAGE_MARGIN}px;
-  border-bottom: 1px solid;
 `;
 
 const SlideListItem = styled.li`
   display: block;
   padding: 0;
+  margin: ${PAGE_MARGIN}px 0;
+  border-bottom: 1px solid;
 `;
 
 const SlideImage = styled.img`
@@ -39,8 +42,8 @@ const SlideDescription = styled.p`
 `;
 
 const Footer = styled.footer`
+  margin: ${PAGE_MARGIN}px 0;
   text-align: center;
-  padding: ${PAGE_MARGIN}px 0;
 `;
 
 const Index = ({data}) => {
@@ -67,11 +70,17 @@ const Index = ({data}) => {
         </Link>
         <SlideDescription>
           <Link to={slug}>{title}</Link>
-          {' at '}
-          <time>{moment(date).format('YYYY-MM-DD')}</time>
-          {' ('}
-          <a href={event.url}>{event.name}</a>
-          {')'}
+          {
+            event && date && (
+              <>
+                {' at '}
+                <a href={event.url}>{event.name}</a>
+                {' ('}
+                <time>{moment(date).format('YYYY-MM-DD')}</time>
+                {')'}
+              </>
+            )
+          }
         </SlideDescription>
       </SlideListItem>
     );
@@ -107,7 +116,7 @@ export const query = graphql`
 
     allFile(
       filter: {extension: {eq: "mdx"}}
-      sort: {fields: [fields___frontmatter___date], order: ASC}
+      sort: {fields: [fields___frontmatter___date], order: DESC}
     ) {
       edges {
         node {
