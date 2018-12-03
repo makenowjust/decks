@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{126:function(a){a.exports={pages:[{componentChunkName:"component---src-pages-index-js",jsonName:"index",path:"/"},{componentChunkName:"component---cache-mdx-deck-template-620-b-7-ad-8-f-6-fadeec-57-d-1-c-85-cf-301-a-6-d-8-js",jsonName:"deck-crystal-tokyo-8-c19",path:"/deck/crystal-tokyo-8/"}],dataPaths:{"deck-crystal-tokyo-8-c19":"920/path---deck-crystal-tokyo-8-c-19-28b-DBu4vCUa9kwU7Lyg0K17XparkO8",index:"156/path---index-6a9-CDdik8Vd2rTpGx7tkq5zPU08hzw"}}}}]);
+//# sourceMappingURL=7-424cd07b7aac4439c956.js.map
