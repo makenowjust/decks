@@ -1,0 +1,219 @@
+---
+title: crystal tool formatの話
+event:
+  name: '言語処理系勉強会 Vol.1'
+  url: https://connpass.com/event/104863/
+date: 2018-11-17
+---
+
+import {Split} from 'mdx-deck/layouts';
+import {CodeSurfer} from 'mdx-deck-code-surfer';
+
+export const theme = undefined;
+
+import no4Image from './images/no4.png';
+import iconImage from './images/icon.png';
+
+## `crystal tool format`の話
+
+---
+
+<img src={iconImage} />
+
+- Twitter: @make_now_just
+- GitHub: @MakeNowJust
+- 正規表現好き
+
+---
+
+## No.4 Crystal Contributor
+
+<img src={no4Image} />
+
+---
+
+## Crystal とは？
+
+**Ruby っぽい構文**と**C 言語の速度**を兼ね備えた
+プログラミング言語。
+
+LLVM でネイティブコードにコンパイルする。
+
+---
+
+```crystal
+a = 1
+
+while true
+  case a
+  when Int32  then a = "foo"
+  when String then break
+  end
+end
+
+typeof(a) # => String
+```
+
+---
+
+:sunglasses: https://crystal-lang.org/
+
+---
+
+## `crystal`コマンド色々
+
+- `crystal run foo.cr`: コンパイル → 実行
+- `crystal build foo.cr`: コンパイル
+
+---
+
+## `crystal`コマンド色々
+
+- `crystal docs`: ドキュメントジェネレータ
+- `crystal play`: プレイグランド
+- `crystal tool format`: フォーマッター
+
+---
+
+今回は`crystal tool format`の話
+
+---
+
+## `crystal tool format`
+
+- Crystal 公式のフォーマッター
+- コンパイラのソースコードなどは
+  これでフォーマットされている
+
+---
+
+## `crystal tool format`
+
+- インデント・末尾のコンマなどを修正
+- 元のコードを**可能な限り**尊重する
+
+---
+
+export default Split;
+
+```crystal
+[{foo: "foo"}, {foo: "bar"},
+ {foo: "baz"}]
+```
+
+```crystal
+[
+  {
+    foo: "foo",
+  },
+  {foo: "bar"},
+  {
+    foo: "baz",
+  },
+]
+```
+
+---
+
+## **普通**のフォーマッタの実装方法
+
+1. ソースコードを構文解析
+   (このときに位置情報を付加する)
+2. 抽象構文木を辿りながら
+   フォーマットしたソースコードを生成する
+
+---
+
+Crystal のような書き方が複数ある言語で、
+構文木に全ての情報を付加するのは大変。
+(e.g. メソッド呼び出しの括弧の有無、
+文字列リテラルの区切り文字)
+
+そうでなくとも前述したことをするには
+位置情報を確認することが多くなって煩雑。
+
+---
+
+## `crystal tool format`での方法
+
+1. ソースコードを構文解析
+2. 字句解析器をもう一度作る
+3. 抽象構文木を辿りながら、
+   字句解析器を動かしつつ、
+   フォーマットしたソースコードを生成する
+
+---
+
+ちなみに実装は、Crystal のリポジトリの、
+
+`src/compiler/crystal/tools/formatter.cr`
+
+にあります。
+
+---
+
+驚きの 1 ファイル 4861 行。
+
+---
+
+<CodeSurfer
+  title="e.g. 配列のフォーマット"
+  code={require('!raw-loader!./examples/format_literal_elements.cr')}
+  lang="ruby"
+  showNumbers={true}
+  dark={true}
+  steps={[
+    {notes: 'def format_literal_elements'},
+    {lines: [3], notes: '最初の`[`の出力'},
+    {
+      lines: new Array(28 - 11 + 1)
+        .join()
+        .split(',')
+        .map((x, i) => i + 11),
+      notes: '`[`のあとに改行が続けば内側のインデントを2に、そうじゃない場合はそのまま',
+    },
+    {
+      lines: new Array(75 - 29 + 1)
+        .join()
+        .split(',')
+        .map((x, i) => i + 29),
+      notes: '各要素をフォーマットしていく',
+    },
+    {
+      lines: new Array(45 - 41 + 1)
+        .join()
+        .split(',')
+        .map((x, i) => i + 41),
+      notes: '要素をインデントと共にフォーマットする',
+    },
+    {
+      lines: new Array(74 - 49 + 1)
+        .join()
+        .split(',')
+        .map((x, i) => i + 49),
+      notes: '要素のあとに続くはずのコンマについての処理',
+    },
+  ]}
+/>
+
+---
+
+## この方法の問題点
+
+- ソースコードに合わせて字句解析器を動かすので、
+  実質的に構文解析器の再実装になる
+- e.g. 字句解析器の`next_token`を一つ忘れると
+  結果が大きくずれてよく分からなくなる
+
+---
+
+## この方法の問題点
+
+- なので、とてもバグを作りやすい
+- とてもバグを作りやすい
+
+大事なことなので
+
+---
+
+他のフォーマッターの実装について書こうとして力尽きた。
