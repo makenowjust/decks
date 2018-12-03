@@ -2,10 +2,6 @@ language: node_js
 node_js:
   - '11'
 
-env:
-  global:
-    secure: xonddeEEnQqz6gcXbpJ0jZquWn8HJ3Bgn8VI1HeZTvM5tY1RPVqPsiyoYtj4LPBB1VDXMS4rFfZgTSLr/Ufsws5faRajR0vgfy3GCFlT7CFecgcFPi33nVAbqWVCPaGOWV+rKsQPtAE+KUoWHQ9mpHHVQI9iN3AB4L09zCZ/yDaytVsurUzwdnm5y0gzNCs0sEL8i+Hatyz+W5LBh/CMf5h5ILa5zUb2yPJxpJWC8uSe5Lv2lm/k966AETKExzsgPQHqGxNvvY+snBKtRxCP6pNwjZFmK9t0SbRE/SCAzJ9ql6Dc9BIyQU9er3xnKm8wq0CWeDe4dwVNOsB2CMWeZDoJUZm5kZ97w86hE9P+A2oMk61BIOnTtJlNSbh4NP0NsrJnnt8PvbvwbhsOLuPY1k9aj4BQ5Em/uepOyT+2P8h+fuAwVioW6Xorv1y5gyURelIy1RrF4HOPKedFvB5lCepK1+qzpDHXCqMxUekIM+4wUg60JjiW95St6jcsga1g7KB1dYzcMJuKiyC53SiJyr7gvQmGGFe7N7rijSs/bfhZ3z8nYjnIiH//r2kPPQ8QtPbDQHI6zexuBohNu9HPz0zKUYAR+0t4656JP4QrhwuCon5tfiQH220/RujwdIjHMPMOaZBfJpjpnHbX5Zc9uBzW8+68OqSBJrKN9BBsLA0=
-
 script:
   - yarn lint
 
