@@ -39,3 +39,12 @@ eslint --ignore-path .gitignore '**/*.js' $lint_opt
 # `stylelint` against `styled-components` does not support auto fixing, so don't pass `$lint_opt`.
 stylelint --ignore-path .gitignore '**/*.js'
 ```
+
+## build-dockerfile
+
+Build `.circleci/Dockerfile` for CircleCI.
+
+```bash
+set -ex
+docker build -t makenowjust/decks:11-browsers .circleci
+```

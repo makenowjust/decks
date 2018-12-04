@@ -1,0 +1,55 @@
+version: '2.1'
+
+executors:
+  decks:
+    docker:
+      - image: makenowjust/decks:11-browsers
+
+commands:
+  install_deps:
+    description: Install Dependencies
+    steps:
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
+      - run: |
+          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+          yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+
+jobs:
+  check:
+    executor: decks
+    steps:
+      - checkout
+      - install_deps
+      - run: yarn lint
+  deploy:
+    executor: decks
+    steps:
+      - checkout
+      - install_deps
+      - run: yarn build
+      - run: |
+          yarn gh-pages -xd public \
+            -r "https://MakeNowJust:$GITHUB_TOKEN@github.com/MakeNowJust/decks.git" \
+            -u "TSUYUSATO Kitsune (bot) <make.just.on@gmail.com>"
+
+workflows:
+  version: 2
+  check_and_deploy:
+    jobs:
+      - check:
+          filters:
+            branches:
+              ignore: gh-pages
+      - deploy:
+          requires:
+            - check
+          filters:
+            branches:
+              only: master

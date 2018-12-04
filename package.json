@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "maid build",
+    "build-dockerfile": "maid build-dockerfile",
     "dev": "maid dev",
     "format": "maid lint --fix",
     "lint": "maid lint"
@@ -39,6 +40,7 @@
     "gatsby-plugin-react-helmet": "^3.0.3",
     "gatsby-plugin-styled-components": "^3.0.4",
     "gatsby-source-filesystem": "^2.0.10",
+    "gh-pages": "^2.0.1",
     "gray-matter": "^4.0.1",
     "maid": "^0.3.0",
     "prettier": "^1.14.3",
