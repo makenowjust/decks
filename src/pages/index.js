@@ -72,7 +72,8 @@ const Index = ({data}) => {
           <Link to={slug}>{title}</Link>
           {event && date && (
             <>
-              {' at '}
+              <br />
+              {'at '}
               <a href={event.url}>{event.name}</a>
               {' ('}
               <time>{moment(date).format('YYYY-MM-DD')}</time>
