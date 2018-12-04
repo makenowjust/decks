@@ -33,7 +33,9 @@ jobs:
     steps:
       - checkout
       - install_deps
-      - run: yarn build
+      - run: |
+          export PUPPETEER_EXECUTABLE_PATH=/opt/google/chrome/google-chrome
+          yarn build
       - run: |
           yarn gh-pages -xd public \
             -r "https://MakeNowJust:$GITHUB_TOKEN@github.com/MakeNowJust/decks.git" \
