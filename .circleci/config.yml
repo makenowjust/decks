@@ -38,7 +38,7 @@ jobs:
           yarn build --prefix-paths
       - run: |
           yarn -s gh-pages -xd public \
-            -m "Update [ci skip]"
+            -m "Update [ci skip]" \
             -r "https://MakeNowJust:$GITHUB_TOKEN@github.com/MakeNowJust/decks.git" \
             -u "TSUYUSATO Kitsune (bot) <make.just.on@gmail.com>"
 
