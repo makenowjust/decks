@@ -12,4 +12,4 @@ MIT (c) 2018 TSUYUSATO "[MakeNowJust][]" Kitsune
 
 [circleci-badge]: https://img.shields.io/circleci/project/github/MakeNowJust/decks/master.svg?style=for-the-badge&logo=circleci
 [circleci]: https://circleci.com/gh/MakeNowJust/decks
-[MakeNowJust]: https://github.com/MakeNowJust
+[makenowjust]: https://github.com/MakeNowJust
