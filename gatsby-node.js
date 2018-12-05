@@ -5,12 +5,9 @@ const fs = require('fs-extra');
 const grayMatter = require('gray-matter');
 const {createFilePath} = require('gatsby-source-filesystem');
 
-const createMdxDeckTemplate = require('./src/utils/create-mdx-deck-template');
+const getPort = require('get-port');
 
-const mdxDeckPort = (() => {
-  let port = 9000;
-  return () => port++;
-})();
+const createMdxDeckTemplate = require('./src/utils/create-mdx-deck-template');
 
 exports.onCreateNode = async ({node, getNode, loadNodeContent, actions, pathPrefix}) => {
   const {createNodeField} = actions;
@@ -33,7 +30,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions, pathPref
       // Run `mdx-deck screenshot` command.
       await execa('mdx-deck', [
         'screenshot',
-        `--port=${mdxDeckPort()}`,
+        `--port=${await getPort()}`,
         '--webpack=./webpack.config.mdx-deck.js',
         `--out-dir=${outDir}`,
         `--out-file=${outFile}`,
