@@ -4,7 +4,6 @@ const execa = require('execa');
 const fs = require('fs-extra');
 const grayMatter = require('gray-matter');
 const {createFilePath} = require('gatsby-source-filesystem');
-
 const getPort = require('get-port');
 
 const createMdxDeckTemplate = require('./src/utils/create-mdx-deck-template');
