@@ -1,7 +1,8 @@
 import {graphql, Link} from 'gatsby';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import moment from 'moment';
 import styled from 'styled-components';
 
 import 'modern-normalize';
@@ -100,6 +101,10 @@ const Index = ({data}) => {
       </Footer>
     </>
   );
+};
+
+Index.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 export default Index;
