@@ -3,7 +3,7 @@ version: '2.1'
 executors:
   decks:
     docker:
-      - image: makenowjust/decks:11-browsers
+      - image: makenowjust/decks:latest
 
 commands:
   install_deps:
