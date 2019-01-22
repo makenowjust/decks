@@ -1,0 +1,334 @@
+---
+title: LeanPropsの紹介
+event:
+  name: 'Scala勉強会第236回 in 西新宿'
+  url: https://rpscala.connpass.com/event/115424/
+date: 2019-01-22
+---
+
+
+import {default as base} from 'mdx-deck/themes';
+import style from 'react-syntax-highlighter/styles/prism/atom-dark';
+import haskell from 'react-syntax-highlighter/languages/prism/haskell';
+import scala from 'react-syntax-highlighter/languages/prism/scala';
+
+export const theme = {
+  ...base,
+  prism: {
+    style,
+    languages: {haskell, scala},
+  },
+};
+
+import leancheckImage from './images/leancheck.png';
+import leancheckPhDImage from './images/leancheck-phd.png';
+import leanpropsImage from './images/leanprops.png';
+
+# LeanPropsの紹介
+
+## TSUYUSATO Kitsune (@MakeNowJust)
+
+---
+
+# 前回のあらすじ
+
+---
+
+## ある日のこと
+
+---
+
+<img src={leancheckImage} />
+
+<https://github.com/rudymatela/leancheck>
+
+---
+
+<img src={leancheckPhDImage} />
+
+<https://matela.com.br/paper/rudy-phd-thesis-2017.pdf>
+
+---
+
+## ひと目で、尋常じゃないライブラリと見抜いたよ
+
+---
+
+## (Haskellのライブラリなので)<br/>Scalaに移植してみよう！
+
+---
+
+# 本編
+
+---
+
+# 自己紹介
+
+- TSUYUSATO Kitsune (@MakeNowJust)
+- 普段はTypeScriptとかを書いている
+- Crystalというプログラミング言語のコントリビュータ
+- 形式言語が好き
+
+---
+
+# まず初めに、
+
+---
+
+# LeanCheckとは？
+
+- Haskellのライブラリ
+- *"simple enumerative property-based testing library"*
+- 実装が比較的小さい<br/>
+  (`Test.LeanCheck.Core`は300行くらい)
+
+```haskell
+> holds 100 $ \\xs-> sort (sort xs) == sort (xs :: [Int])
+True
+```
+
+---
+
+# LeanCheckとは？
+
+- SmallCheckのような感じで、小さいものから順番にチェックしていく方針
+- ランダムにデータを生成するのは*サポートしていない*
+- Genericを使ったデータを生成するクラスの自動導出
+- Template Haskellを使ったデータを生成する型クラスの自動導出
+- **関数の生成をサポートしている**
+- **関数に対する`Show`クラスのインスタンスを提供している**
+
+(個人的には下の二つが面白いと思った)
+
+---
+
+# 早速、Scalaに移植してみた
+
+---
+
+<img src={leanpropsImage} />
+
+<https://makenowjust.github.io/leanprops/>
+
+---
+
+# LeanPropsという名前になった
+
+(leancheck4sという名前が<br/>当時はなぜか思い付かなかった‥‥)
+
+---
+
+# LeanPropsで出来ること
+
+- `Int`などの整数、`Double`などの浮動小数点数、<br/>いくつかのコレクション、**関数**などの生成
+- ↑の型の値を文字列にしてて表示する機能(pretty print)
+- property-based testingの基本的なサポート
+- Magnoliaによる生成と表示を担当する型クラスの自動導出
+
+---
+
+```scala
+scala> import codes.quine.leanprops._
+import codes.quine.leanprops._
+
+scala> inspect { (x: Boolean, y: Boolean) => x && y }
+res0: String =
+((x, y) => (x, y) match {
+  case (true, true) => true
+  case _            => false
+})
+
+scala> holds(100) { (xs: List[Int]) =>
+     |   xs.sorted.sorted == xs.sorted
+     | }
+res1: Boolean = true
+```
+
+---
+
+# 動いています
+
+---
+
+# LeanPropsの主要な型
+
+- `trait Listable[A]`:<br/>`A`が自動生成可能なことを表す型クラス
+- `trait Inspectable[A]`:<br/>`A`が文字列にして表示可能なことを表す型クラス
+- `class Tiers[A]`:<br/>`Stream[Seq[A]]`をラップしたデータ構造
+- `class WithInspectConfig[A]`:<br/>`InspectConfig`を持ったReader Monad
+
+一番重要なのは`trait Listable[A]`。
+
+---
+
+## `trait Listable[A]`
+
+```scala
+trait Listable[A] {
+  def tiers: Tiers[A]
+}
+```
+
+- `Tiers[A]`は`Stream[Seq[A]]`のラッパ
+- なぜ単純な`Stream[A]`ではなく`Stream[Seq[A]]`なのは<br/>
+  データを組み合わせられるようにするため
+
+---
+
+## どうして`Stream[A]`じゃダメ？
+
+仮に`Listable[A]`がこうだったとする。
+
+```scala
+trait Listable[A] {
+  def list: Stream[A]
+}
+```
+
+`list[A] = Listable[A].list`とする。
+
+---
+
+## どうして`Stream[A]`じゃダメ？
+
+<small>
+
+- `list[Int] = Stream(0, 1, -1, ...)`
+- そこで`list[(A, B)]`を考えると、単純な実装だと‥
+
+  ```scala
+  list[(A, B)] = for {
+    x <- list[A]
+    y <- list[B]
+  } yield (x, y)
+  ```
+
+</small>
+
+---
+
+## どうして`Stream[A]`じゃダメ？
+
+- つまり、
+
+  ```scala
+  Stream((list[A](0), list[B](0)),
+         (list[A](0), list[B](1)),
+         ... (list[B]が終了するまで続く),
+         (list[A](1), list[B](0)),
+         ...)
+  ```
+
+- `(Int, Int)`の場合、<br/>左側に`0`しか出てこなくなる。
+
+---
+
+## どうして`Stream[A]`じゃダメ？
+
+<small style={{fontSize: "10px"}}>
+
+- そこで`tiers[A]: Stream[Seq[A]]`を考える。
+- `tiers[Int] = Stream(Seq(0), Seq(1), Seq(-1), ...)`
+- `tiers[(A, B)]`は次のような感じ、
+
+  ```scala
+  def prod[A, B](xs: Seq[A], ys: Seq[B]) = for (x <- xs; y <- ys) yield (x, y)
+  Stream(prod(tiers[A](0), tiers[B](0)),      // 添字の合計が0
+         prod(tiers[A](0), tiers[B](1))
+           ++ prod(tiers[A](1), tiers[B](0)), // 添字の合計が1
+         prod(tiers[A](0), tiers[B](2))
+           ++ prod(tiers[A](1), tiers[B](1))
+           ++ prod(tiers[A](2), tiers[B](0)), // 添字の合計が2
+         ...)
+  ```
+
+- こうすると、無限リストでもいい感じに積を取れる。
+
+</small>
+
+---
+
+## `trait Listable[A]`
+
+- `Set`や`Map`の場合は重複しないように生成したり、<br/>
+  いくつか工夫する必要がある。
+- `Function1`の場合は`Map`とほとんど同じなのだけど、<br/>
+  生成される関数を全域にするためフォールバック用の値も<br/>
+  同時に生成する。
+- 詳しくはソースコードを読んでください。
+
+---
+
+# 関数の表示
+
+(さすがに時間が無さそうなので三行で)
+
+1. 引数の組を生成して、関数を呼び出して、返り値を記録
+2. 返り値の同じ引数の組を`_`で上手い具合に置き換えていく<br/>
+   (実際はそんなに上手くやっていない)
+3. それらを並べて表示する。
+
+引数を自動生成できるんだから、<br/>
+たくさん呼び出して返り値を記録すれば<br/>
+それっぽい`match`式が作れるよね、というノリ。
+
+---
+
+# `trait Inspectable[A]`
+
+```scala
+trait Inspectable[A] {
+  def inspect(x: A): WithInspectConfig[A]
+  def bindtiers(x: Try[A]): Tiers[(Seq[Seq[String]], Try[String])]
+}
+```
+
+この`bindtiers`が、引数と返り値を記録するメソッド。
+
+---
+
+# 現実は厳しい‥‥
+
+```scala
+scala> inspect { (xs: List[Int]) => xs.head }
+res3: String =
+(x => x match {
+  case List()        => throw new NoSuchElementException("head of empty list")
+  case List(0)       => 0
+  case List(0, 0)    => 0
+  case List(1)       => 1
+  case List(0, 0, 0) => 0
+  case List(0, 1)    => 0
+  case List(1, 0)    => 1
+  case List(-1)      => -1
+  ...
+})
+```
+
+ぶっちゃけ`Boolean`のときくらいしか上手くいかない。
+
+---
+
+# 思ったことなど
+
+- `Stream`は難しすぎる。<br/>すぐにOOMとStackOverflowを起こす
+- Magnoliaの黒魔術感‥‥。
+- テストはμTestとsbt-doctestで書いた。<br/>doctest良い
+- ドキュメントはmdocとDocusaurusで作った。<br/>
+  大したライブラリじゃないのに無駄に立派になってしまう
+
+---
+
+# 今後の目標、やっていき
+
+- いくつかの名前のリファクタリング。<br/>
+  `WithInspectConfig`って名前どうなの？
+- `Listable`、`Inspectable`のインスタンスを増やす
+- `cats`・`scalaz`の型のインスタンスを実装する
+- `shapeless`での自動導出
+- `sbt`との統合
+- `discipline`のようなインターフェース(?)
+
+---
+
+# ありがとうございました :smile:
