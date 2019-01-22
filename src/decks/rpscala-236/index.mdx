@@ -6,7 +6,6 @@ event:
 date: 2019-01-22
 ---
 
-
 import {default as base} from 'mdx-deck/themes';
 import style from 'react-syntax-highlighter/styles/prism/atom-dark';
 import haskell from 'react-syntax-highlighter/languages/prism/haskell';
@@ -24,7 +23,7 @@ import leancheckImage from './images/leancheck.png';
 import leancheckPhDImage from './images/leancheck-phd.png';
 import leanpropsImage from './images/leanprops.png';
 
-# LeanPropsの紹介
+# LeanProps の紹介
 
 ## TSUYUSATO Kitsune (@MakeNowJust)
 
@@ -54,7 +53,9 @@ import leanpropsImage from './images/leanprops.png';
 
 ---
 
-## (Haskellのライブラリなので)<br/>Scalaに移植してみよう！
+## (Haskell のライブラリなので)
+
+<br />Scala に移植してみよう！
 
 ---
 
@@ -65,8 +66,8 @@ import leanpropsImage from './images/leanprops.png';
 # 自己紹介
 
 - TSUYUSATO Kitsune (@MakeNowJust)
-- 普段はTypeScriptとかを書いている
-- Crystalというプログラミング言語のコントリビュータ
+- 普段は TypeScript とかを書いている
+- Crystal というプログラミング言語のコントリビュータ
 - 形式言語が好き
 
 ---
@@ -75,12 +76,12 @@ import leanpropsImage from './images/leanprops.png';
 
 ---
 
-# LeanCheckとは？
+# LeanCheck とは？
 
-- Haskellのライブラリ
-- *"simple enumerative property-based testing library"*
+- Haskell のライブラリ
+- _"simple enumerative property-based testing library"_
 - 実装が比較的小さい<br/>
-  (`Test.LeanCheck.Core`は300行くらい)
+  (`Test.LeanCheck.Core`は 300 行くらい)
 
 ```haskell
 > holds 100 $ \\xs-> sort (sort xs) == sort (xs :: [Int])
@@ -89,12 +90,12 @@ True
 
 ---
 
-# LeanCheckとは？
+# LeanCheck とは？
 
-- SmallCheckのような感じで、小さいものから順番にチェックしていく方針
+- SmallCheck のような感じで、小さいものから順番にチェックしていく方針
 - ランダムにデータを生成するのは*サポートしていない*
-- Genericを使ったデータを生成するクラスの自動導出
-- Template Haskellを使ったデータを生成する型クラスの自動導出
+- Generic を使ったデータを生成するクラスの自動導出
+- Template Haskell を使ったデータを生成する型クラスの自動導出
 - **関数の生成をサポートしている**
 - **関数に対する`Show`クラスのインスタンスを提供している**
 
@@ -102,7 +103,7 @@ True
 
 ---
 
-# 早速、Scalaに移植してみた
+# 早速、Scala に移植してみた
 
 ---
 
@@ -112,18 +113,18 @@ True
 
 ---
 
-# LeanPropsという名前になった
+# LeanProps という名前になった
 
-(leancheck4sという名前が<br/>当時はなぜか思い付かなかった‥‥)
+(leancheck4s という名前が<br/>当時はなぜか思い付かなかった‥‥)
 
 ---
 
-# LeanPropsで出来ること
+# LeanProps で出来ること
 
 - `Int`などの整数、`Double`などの浮動小数点数、<br/>いくつかのコレクション、**関数**などの生成
-- ↑の型の値を文字列にしてて表示する機能(pretty print)
-- property-based testingの基本的なサポート
-- Magnoliaによる生成と表示を担当する型クラスの自動導出
+- ↑ の型の値を文字列にしてて表示する機能(pretty print)
+- property-based testing の基本的なサポート
+- Magnolia による生成と表示を担当する型クラスの自動導出
 
 ---
 
@@ -150,12 +151,12 @@ res1: Boolean = true
 
 ---
 
-# LeanPropsの主要な型
+# LeanProps の主要な型
 
 - `trait Listable[A]`:<br/>`A`が自動生成可能なことを表す型クラス
 - `trait Inspectable[A]`:<br/>`A`が文字列にして表示可能なことを表す型クラス
 - `class Tiers[A]`:<br/>`Stream[Seq[A]]`をラップしたデータ構造
-- `class WithInspectConfig[A]`:<br/>`InspectConfig`を持ったReader Monad
+- `class WithInspectConfig[A]`:<br/>`InspectConfig`を持った Reader Monad
 
 一番重要なのは`trait Listable[A]`。
 
@@ -311,10 +312,10 @@ res3: String =
 
 # 思ったことなど
 
-- `Stream`は難しすぎる。<br/>すぐにOOMとStackOverflowを起こす
-- Magnoliaの黒魔術感‥‥。
-- テストはμTestとsbt-doctestで書いた。<br/>doctest良い
-- ドキュメントはmdocとDocusaurusで作った。<br/>
+- `Stream`は難しすぎる。<br/>すぐに OOM と StackOverflow を起こす
+- Magnolia の黒魔術感‥‥。
+- テストは μTest と sbt-doctest で書いた。<br/>doctest 良い
+- ドキュメントは mdoc と Docusaurus で作った。<br/>
   大したライブラリじゃないのに無駄に立派になってしまう
 
 ---
