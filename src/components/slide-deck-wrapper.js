@@ -108,6 +108,8 @@ const SlideDeckWrapper = React.memo(({data, slides, theme}) => {
     <>
       <Helmet>
         <title>{title}</title>
+        {/* Reset viewport beacause smartphone's screen width is too small to show slides. */}
+        <meta name="viewport" content="" />
       </Helmet>
       <div ref={focusRef} role="presentation" tabIndex="-1" onKeyDown={handleKeyDown}>
         <SlideDeck ref={slideDeckRef} slides={slides} theme={theme} />
