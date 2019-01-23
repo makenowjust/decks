@@ -57,6 +57,7 @@
     "stylelint-processor-styled-components": "1.5.2"
   },
   "resolutions": {
+    "@mdx-js/tag": "^0.16.6",
     "babel-plugin-styled-components": "^1.10.0",
     "react": "16.8.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",
