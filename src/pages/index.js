@@ -97,7 +97,7 @@ const Index = ({data}) => {
       </Header>
       <SlideList>{decks}</SlideList>
       <Footer>
-        2018 © TSUYUSATO <a href="https://github.com/MakeNowJust">"MakeNowJust"</a> Kitsune
+        2018-2019 © TSUYUSATO <a href="https://github.com/MakeNowJust">"MakeNowJust"</a> Kitsune
       </Footer>
     </>
   );
