@@ -57,8 +57,10 @@
     "stylelint-processor-styled-components": "1.5.1"
   },
   "resolutions": {
+    "babel-plugin-styled-components": "^1.10.0",
     "react": "16.8.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",
+    "react-dev-utils": "^7.0.0",
     "styled-components": "4.1.3"
   }
 }
