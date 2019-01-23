@@ -36,6 +36,7 @@ exports.onCreateNode = async ({node, getNode, loadNodeContent, actions, pathPref
         node.absolutePath,
       ]);
     }
+
     createNodeField({
       node,
       name: 'screenshotUrl',
