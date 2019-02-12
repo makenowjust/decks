@@ -34,6 +34,7 @@ const SlideListItem = styled.li`
 const SlideImage = styled.img`
   width: 100%;
   max-width: ${PAGE_WIDTH - PAGE_MARGIN * 2}px;
+  border: 1px solid;
 `;
 
 const SlideDescription = styled.p`
