@@ -7648,10 +7648,10 @@ mdx-deck-code-surfer@0.5.5:
     code-surfer "^0.5.5"
     memoize-one "^4.0.2"
 
-mdx-deck@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-1.10.0.tgz#625d4dd08472a821fd6e6091b6fcb06e388cbd4b"
-  integrity sha512-zGMfGiF1oxfOQaUnWkkZWXYVrvWWK8BSp1yI5pS3nAcLO7ShejYd6TGXBIJno/bdN5DWFw1+/toqlEu91HncBw==
+mdx-deck@1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/mdx-deck/-/mdx-deck-1.10.2.tgz#382b45671805e149ecba23163f14146813dd221c"
+  integrity sha512-Qs9Ja7gIf7EYYnkX/FSAktETIt9f+D+pnMLXEbHz5OW/myI5FZMTiHsntMCs+oVjFF36gUJWuyM7dlkBZ2jXAg==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-proposal-class-properties" "^7.0.0"
