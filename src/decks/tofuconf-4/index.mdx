@@ -1,0 +1,237 @@
+---
+title: 世界一のなり方
+event:
+  name: 'tofuConf #4'
+  url: https://tofuconf.club/2019-01-09/4th-tofuconf-general.html
+date: 2019-03-16
+---
+
+import {default as base} from 'mdx-deck/themes';
+import style from 'react-syntax-highlighter/styles/prism/atom-dark';
+import scala from 'react-syntax-highlighter/languages/prism/';
+
+export const theme = {
+  ...base,
+  prism: {
+    style,
+    languages: {},
+  },
+};
+
+import repoImage from './images/repo.png';
+import repoFreqImage from './images/repo-freq.png';
+
+# 世界一のなり方
+
+## by さっき作った
+
+---
+
+# プロフィール
+
+- 情報システム分野
+- 2016 年卒業
+- 現在は大学生
+- プログラマとしてはたらいてる
+
+---
+
+# 注意
+
+- ネタ多めです
+- 徹夜で作ったので練習とかしてません
+- テキトーなこと言ってるのであまり真に受けないでください
+
+以上。
+
+---
+
+# 次々とプログラミング言語で<br/>Quine を書くのは、この男〜
+
+---
+
+<div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center'}}>
+  <div
+    style={{
+      background: 'black',
+      color: 'red',
+      width: '2.5em',
+      fontSize: '3em',
+      height: '100vh',
+      padding: '1em 0.5em 0 1em',
+      writingMode: 'vertical-rl',
+    }}
+  >
+    さっき作った
+  </div>
+  <div
+    style={{
+      width: '60vw',
+      textAlign: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '2em',
+    }}
+  >
+    (ここに本人が入る予定)
+  </div>
+  <div
+    style={{
+      background: 'red',
+      color: 'white',
+      width: '2.5em',
+      fontSize: '3em',
+      height: '100vh',
+      padding: '0 1em 0 0.5em',
+      writingMode: 'vertical-rl',
+    }}
+  >
+    Quineのニューウェーブ
+  </div>
+</div>
+
+---
+
+# <small>世界で一番多くのプログラミング言語で<br/>Quine を書きました</small>
+
+---
+
+## アジェンダ
+
+1. **なぜ・どうやって** 世界一になったのか？
+2. 世界一になる **意味・意義**
+
+---
+
+# と、その前に、<br/>Quine って何？
+
+---
+
+# Quine とは？
+
+- ソースコード自身を出力するようなプログラム<br/>
+  (下のコードがまさに Quine)
+
+```javascript
+eval((s = "console.log('eval(s='+JSON.stringify(s)+')')"));
+```
+
+```console
+$ node quine.js | node - | node -
+eval(s="console.log('eval(s='+JSON.stringify(s)+')')")
+```
+
+- **特に世の中の役には立たない**。
+- 意外と書けそうで書けないところが面白い。
+
+---
+
+# やったこと
+
+- 狂気的に色んなプログラミング言語で Quine を書き続けた
+- その数なんと**265 言語**
+- 世の中にはたくさんのプログラミング言語があるんだなぁ‥‥
+- (Rosetta Code にある Quine が 127 言語なので、世界一だと思う)
+
+---
+
+# [MakeNowJust/quine](https://github.com/MakeNowJust/quine)
+
+<img src={repoImage} width="750px" />
+
+---
+
+# 1. なぜ・どうやって<br/>世界一になったのか？
+
+---
+
+## 突然ですが<br/>Q. "Quine" を知っていた人、挙手 ✋✋
+
+---
+
+# つまりそういうこと
+
+- 他に誰もやっている人がいなかった
+- オンリーワン ⇒ ナンバーワン
+
+---
+
+## ではなぜこんなにたくさんの<br/>プログラミング言語で Quine を書いたのか？
+
+---
+
+# A. 勉強がしたくなかった
+
+---
+
+# Quine を書いていた時期
+
+<img src={repoFreqImage} width="750px" />
+
+---
+
+# 2014/12〜2015/06 あたり
+
+高校 2 年生の冬から夏にかけての半年
+
+このあたりは本当に毎日新しいプログラミング言語を<br/>
+見つけてきて Quine を書いていた。
+
+多分あまりに勉強がしたくなくて奇行に走っていたのだと思う。
+
+(コンビニの冷蔵庫に入ったりしなくて良かった)
+
+---
+
+# 2. 世界一になる意味・意義
+
+---
+
+## 前略、気が付いたら世界一になっていた
+
+- でもそれって意味あるの？
+- なんか人生の役に立った？
+
+---
+
+# 世界一になって良かったこと
+
+- 人に自慢できる
+- しかし何を言っているのか理解されない
+- けどまぁ、なんかすごそうということは伝わる
+- **なんかすごそう**と思ってもらえる
+
+---
+
+# もう少し真面目にやります
+
+---
+
+# 世界一になって良かったこと
+
+- 世界一になれたのは半年間継続して Quine を書き続けた結果
+- 半年間続けるのは簡単なことじゃない
+  - プログラミング言語を見つけるスキル
+  - ドキュメントを解読するスキル
+  - 動作環境を作るスキル(`docker`とか)
+  - その他いろいろ
+- なぜか広がる人脈(世の中には物好きが一定数いる)
+
+一言でいうと →**継続は力なり**
+
+---
+
+# まとめ
+
+---
+
+# まとめ
+
+- 世界一になりたいなら**誰もやらないようなことをやれ**
+- 誰もやらないようなことでも、<br/>必ず**やる意義・やった意味**はある(と思う)
+- 少なくとも自分はそうだった
+
+---
+
+# おつかれさまでした
