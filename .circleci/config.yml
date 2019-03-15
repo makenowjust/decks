@@ -11,13 +11,12 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
-            - dependency-cache-
+            - yarn-cache-{{ checksum "yarn.lock" }}
       - run: |
           export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
           yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: yarn-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
 
