@@ -4,6 +4,12 @@ import {SlideDeck, updaters, constants} from 'mdx-deck';
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {Helmet} from 'react-helmet';
+import {setConfig} from 'react-hot-loader';
+
+setConfig({
+  ignoreSFC: true,
+  pureRender: true,
+});
 
 import 'modern-normalize';
 
