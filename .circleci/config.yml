@@ -11,11 +11,11 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}
+            - yarn-deps-cache-{{ checksum "yarn.lock" }}
       - run: |
           yarn
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}
+          key: yarn-deps-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
 
