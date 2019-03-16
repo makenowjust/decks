@@ -13,7 +13,6 @@ commands:
           keys:
             - yarn-cache-{{ checksum "yarn.lock" }}
       - run: |
-          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
           yarn
       - save_cache:
           key: yarn-cache-{{ checksum "yarn.lock" }}
@@ -33,7 +32,6 @@ jobs:
       - checkout
       - install_deps
       - run: |
-          export PUPPETEER_EXECUTABLE_PATH=/opt/google/chrome/google-chrome
           yarn build --prefix-paths
       - run: |
           yarn -s gh-pages -xd public \
