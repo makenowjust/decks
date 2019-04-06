@@ -41,7 +41,7 @@
     "gatsby-plugin-react-helmet": "3.0.12",
     "gatsby-plugin-styled-components": "3.0.7",
     "gatsby-source-filesystem": "2.0.28",
-    "get-port": "4.2.0",
+    "get-port": "5.0.0",
     "gh-pages": "2.0.1",
     "gray-matter": "4.0.2",
     "maid": "0.3.0",
