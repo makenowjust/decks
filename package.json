@@ -51,7 +51,7 @@
     "remark-emoji": "2.0.2",
     "remark-unwrap-images": "0.2.0",
     "stylelint": "10.0.1",
-    "stylelint-config-prettier": "5.0.0",
+    "stylelint-config-prettier": "5.1.0",
     "stylelint-config-recommended": "2.2.0",
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-config-xo-space": "0.12.0",
