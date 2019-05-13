@@ -1,0 +1,238 @@
+---
+title: crystal tool implementationの話
+event:
+  name: 'crystal.tokyo #9'
+  url: https://crystal.connpass.com/event/...
+date: 2019-05-13
+---
+
+import {default as base} from 'mdx-deck/themes';
+import style from 'react-syntax-highlighter/styles/prism/atom-dark';
+import crystal from 'react-syntax-highlighter/languages/prism/crystal';
+
+export const theme = {
+  ...base,
+  prism: {
+    style,
+    languages: {crystal},
+  },
+};
+
+# `crystal tool implementation`の話
+
+## さっき作った (@MakeNowJust)
+
+---
+
+## 自己紹介
+
+- HN: さっき作った
+  - GitHub: [@MakeNowJust](https://github.com/MakeNowJust)
+  - Twitter: [@make_now_just](https://twitter.com/make_now_just)
+- 最近は普通に大学生をしている
+
+---
+
+## `crystal tool implementation`とは？
+
+---
+
+## `crystal tool implementation`とは？
+
+- `crystal tool 何とか`で使えるコマンドの 1 つ
+  - `crystal tool format`もこの仲間
+- メソッドの呼び出し位置から実装を検索できる
+- なんかエディタから使って定義位置へジャンプとかしたりできるらしい
+
+使い方:
+
+```bash
+$ crystal tool implementation -c ファイル:行:列 エントリーファイル
+```
+
+---
+
+## 例
+
+`foo.cr`
+
+```crystal
+def foo(x)
+  p x
+end
+
+foo 42
+```
+
+```bash
+$ crystal tool implementation -c foo.cr:5:1 foo.cr
+1 implementation found
+/Users/makenowjust/foo.cr:1:1
+```
+
+---
+
+## 例 (オーバーロード)
+
+`bar.cr`
+
+```crystal
+def bar(x : Int32)
+end
+
+def bar(x : String)
+end
+
+x = rand() < 0.5 ? 1 : "x"
+bar x
+```
+
+```bash
+$ crystal tool implementation -c bar.cr:8:1 bar.cr
+2 implementations found
+/Users/makenowjust/bar.cr:1:1
+/Users/makenowjust/bar.cr:4:1
+```
+
+---
+
+## 便利そう :thinking_face:
+
+---
+
+## 失敗例 (マクロ)
+
+`mac.cr`
+
+```crystal
+macro mac(x)
+  p {{x}}
+end
+
+mac 42
+```
+
+```bash
+$ crystal tool implementation -c mac.cr:5:1 mac.cr
+no implementations or method call found
+```
+
+---
+
+## 失敗例 (呼び出されてないメソッドの中)
+
+`in-call.cr`
+
+```crystal
+def foo
+  bar
+end
+
+def bar
+end
+```
+
+```bash
+$ crystal tool implementation -c in-call.cr:2:3 in-call.cr
+no implementations or method call found
+```
+
+---
+
+## 上手くいかない例
+
+1. マクロ
+2. 呼び出されていないメソッドの中の呼び出し
+3. クラスなどの型
+4. 型エイリアス
+5. 定数
+6. メソッドの型制約
+
+世知辛いのじゃ〜
+
+---
+
+## 進捗パート
+
+ここ一週間くらい`crystal tool implementation`を弄っていた。
+
+---
+
+## 上手くいかない例
+
+色々直した。
+
+1. マクロ
+2. 呼び出されていないメソッドの中の呼び出し
+3. ~~クラスなどの型~~
+4. ~~型エイリアス~~
+5. ~~定数~~
+6. メソッドの型制約
+
+https://github.com/crystal-lang/crystal/pull/7742
+
+---
+
+## 例 (型)
+
+`cls.cr`
+
+```crystal
+class Foo
+end
+
+Foo.new
+```
+
+```bash
+$ bin/crystal tool implementation -c cls.cr:4:1 cls.cr
+Foo
+1 implementation found
+/Users/makenowjust/cls.cr:1:1
+```
+
+---
+
+## 例 (型エイリアス)
+
+`als.cr`
+
+```crystal
+class Foo
+end
+
+class Bar
+end
+
+alias Baz = Foo | Bar
+
+Baz
+```
+
+```bash
+$ bin/crystal tool implementation -c als.cr:9:1 als.cr
+Baz
+1 implementation found
+/Users/makenowjust/als.cr:7:1
+```
+
+---
+
+## 乞うご期待
+
+まだマージされてないです
+
+https://github.com/crystal-lang/crystal/pull/7742
+
+マージされるといいですね
+
+---
+
+## 上手くいかない例
+
+1. マクロ ← がんばればどうにか。
+2. 呼び出されていないメソッドの中の呼び出し ← 原理的に無理
+3. ~~クラスなどの型~~
+4. ~~型エイリアス~~
+5. ~~定数~~
+6. メソッドの型制約 ← 大変そうだけど不可能じゃない？
