@@ -68,7 +68,7 @@ import pr7008Image from './images/pr-7008.png';
 
 <CodeSurfer
   title="ecr-sample.cr"
-  code={require('!!raw-loader!./examples/ecr-sample.cr').trim()}
+  code={require('raw-loader!./examples/ecr-sample.cr').default.trim()}
   lang="ruby"
 />
 
@@ -76,7 +76,7 @@ import pr7008Image from './images/pr-7008.png';
 
 <CodeSurfer
   title="ecr-sample.ecr"
-  code={require('!!raw-loader!./examples/ecr-sample.ecr').trim()}
+  code={require('raw-loader!./examples/ecr-sample.ecr').default.trim()}
   lang="html"
   steps={[{}, {lines: [6], notes: '"tilte" is misspelled...'}]}
 />
@@ -85,7 +85,7 @@ import pr7008Image from './images/pr-7008.png';
 
 <CodeSurfer
   title="Execute ecr-sample.cr"
-  code={require('!!raw-loader!./examples/ecr-sample.log').trim()}
+  code={require('raw-loader!./examples/ecr-sample.log').default.trim()}
   lang="text"
   steps={[
     {},
@@ -112,7 +112,7 @@ $ echo 'require "ecr/process"' |
 
 <CodeSurfer
   title="Result of ecr-sample.ecr"
-  code={require('!!raw-loader!./examples/ecr-sample.ecr.cr').trim()}
+  code={require('raw-loader!./examples/ecr-sample.ecr.cr').default.trim()}
   lang="ruby"
   steps={[
     {},
@@ -151,7 +151,7 @@ It is useful to distinguish between macro generated code and original code.
 
 <CodeSurfer
   title="new.cr"
-  code={require('!!raw-loader!./examples/new-1.cr').trim()}
+  code={require('raw-loader!./examples/new-1.cr').default.trim()}
   lang="ruby"
   steps={[{}, {lines: [5], notes: 'BadType is not defined of course.'}]}
 />
@@ -160,7 +160,7 @@ It is useful to distinguish between macro generated code and original code.
 
 <CodeSurfer
   title="Execute new.cr"
-  code={require('!!raw-loader!./examples/new-1.log').trim()}
+  code={require('raw-loader!./examples/new-1.log').default.trim()}
   lang="text"
   steps={[{}, {lines: [11, 12, 13], notes: 'Show macro generated code. But is it useful?'}]}
 />
@@ -169,7 +169,7 @@ It is useful to distinguish between macro generated code and original code.
 
 <CodeSurfer
   title="new.cr with loc pragma"
-  code={require('!!raw-loader!./examples/new-2.cr').trim()}
+  code={require('raw-loader!./examples/new-2.cr').default.trim()}
   lang="ruby"
   steps={[{}, {lines: [2], notes: 'Build loc pragma by hand.'}]}
 />
@@ -178,7 +178,7 @@ It is useful to distinguish between macro generated code and original code.
 
 <CodeSurfer
   title="Execute new.cr with loc pragma"
-  code={require('!!raw-loader!./examples/new-2.log').trim()}
+  code={require('raw-loader!./examples/new-2.log').default.trim()}
   lang="text"
   steps={[{notes: 'Then, it shows really clear error message.'}]}
 />
