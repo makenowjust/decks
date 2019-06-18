@@ -6360,6 +6360,11 @@ hast-util-parse-selector@^2.2.0:
   resolved "https://registry.yarnpkg.com/hast-util-parse-selector/-/hast-util-parse-selector-2.2.1.tgz#4ddbae1ae12c124e3eb91b581d2556441766f0ab"
   integrity sha512-Xyh0v+nHmQvrOqop2Jqd8gOdyQtE8sIP9IQf7mlVDqp924W4w/8Liuguk2L2qei9hARnQSG2m+wAOCxM7npJVw==
 
+hast-util-whitespace@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-1.0.3.tgz#6d161b307bd0693b5ec000c7c7e8b5445109ee34"
+  integrity sha512-AlkYiLTTwPOyxZ8axq2/bCwRUPjIPBfrHkXuCR92B38b3lSdU22R5F/Z4DL6a2kxWpekWq1w6Nj48tWat6GeRA==
+
 hastscript@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/hastscript/-/hastscript-5.0.0.tgz#fee10382c1bc4ba3f1be311521d368c047d2c43a"
@@ -10789,12 +10794,13 @@ remark-stringify@^6.0.0:
     unherit "^1.0.4"
     xtend "^4.0.1"
 
-remark-unwrap-images@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/remark-unwrap-images/-/remark-unwrap-images-0.2.0.tgz#d2480a849d824b25d3b693944b4d4d2bbe03f887"
-  integrity sha512-4BLvJgT46ZNAJYr2Ibg37HjSESb/iHdUz/ms25psZu7ta/GDyk/5bXR+9w/YFx9phSpNduP+mb+QE0VDExlHnA==
+remark-unwrap-images@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/remark-unwrap-images/-/remark-unwrap-images-1.0.0.tgz#25ae98c2c68bec7797eb27ea41642ae70c7d69db"
+  integrity sha512-/I3QL5Bi5OqXCN9tlgaQZ1UA62ZeElZxUEt4L3BwkvAF1/qYWlVtMOflyFyCLtbMCYhEqrLx4osKSgEEDZaH6Q==
   dependencies:
-    unist-util-visit-parents "^2.0.1"
+    hast-util-whitespace "^1.0.0"
+    unist-util-visit "^1.4.0"
 
 remark-unwrap-images@^0.1.0:
   version "0.1.0"
