@@ -38,7 +38,8 @@ jobs:
           yarn -s gh-pages -xd public \
             -m "Update [ci skip]" \
             -r "https://MakeNowJust:$GITHUB_TOKEN@github.com/MakeNowJust/decks.git" \
-            -u "TSUYUSATO Kitsune (bot) <make.just.on@gmail.com>"
+            -u "TSUYUSATO Kitsune (bot) <make.just.on@gmail.com>" \
+            --git "$(which git)"
 
 workflows:
   version: 2
