@@ -1,4 +1,4 @@
-FROM circleci/node:11-browsers
+FROM circleci/node:12-browsers
 LABEL maintainer="TSUYUSATO Kitsune <make.just.on@gmail.com>"
 
 # Add Japanese font.
