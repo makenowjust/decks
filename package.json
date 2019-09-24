@@ -38,7 +38,7 @@
     "eslint-plugin-unicorn": "11.0.2",
     "execa": "2.0.4",
     "fs-extra": "8.1.0",
-    "gatsby": "2.15.21",
+    "gatsby": "2.15.22",
     "gatsby-plugin-react-helmet": "3.1.8",
     "gatsby-plugin-styled-components": "3.1.6",
     "gatsby-source-filesystem": "2.1.26",
