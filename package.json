@@ -36,7 +36,7 @@
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "2.1.2",
     "eslint-plugin-unicorn": "12.1.0",
-    "execa": "3.0.0",
+    "execa": "3.2.0",
     "fs-extra": "8.1.0",
     "gatsby": "2.16.2",
     "gatsby-plugin-react-helmet": "3.1.13",
