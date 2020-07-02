@@ -52,7 +52,7 @@
     "remark-emoji": "2.0.2",
     "remark-unwrap-images": "1.0.0",
     "stylelint": "13.0.0",
-    "stylelint-config-prettier": "7.0.0",
+    "stylelint-config-prettier": "8.0.2",
     "stylelint-config-recommended": "3.0.0",
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-config-xo-space": "0.14.0",
